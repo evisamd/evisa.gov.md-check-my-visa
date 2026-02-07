@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andorra Online Visa Processing System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #0a2e6d;
+            --secondary-blue: #1a4da3;
+            --accent-gold: #d4af37;
+            --light-bg: #f5f7fa;
+            --text-dark: #333;
+            --text-light: #fff;
+            --border-color: #ddd;
+            --success-green: #28a745;
+            --confirmed-blue: #17a2b8;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-section h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .gov-text {
+            font-size: 12px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        .andorra-flag {
+            width: 50px;
+            height: 35px;
+            background: linear-gradient(90deg, #001489 33%, #fcd20f 33%, #fcd20f 66%, #d0103a 66%);
+            border-radius: 3px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav ul li a.active {
+            background-color: var(--accent-gold);
+            color: var(--primary-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 46, 109, 0.85), rgba(10, 46, 109, 0.9));
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            text-align: center;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+        
+        /* Check Status Section */
+        .check-status-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+        
+        .status-form {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 77, 163, 0.1);
+        }
+        
+        .btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-blue);
+        }
+        
+        /* Application Status Result */
+        .status-result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .status-result.visible {
+            display: block;
+        }
+        
+        .status-granted {
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .status-confirmed {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .status-processing {
+            background-color: #fff3e0;
+            border: 1px solid #ffe0b2;
+        }
+        
+        .status-title {
+            font-size: 22px;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-title:before {
+            content: "✓";
+            margin-right: 10px;
+            font-size: 24px;
+            color: var(--success-green);
+        }
+        
+        .status-title.double:before {
+            content: "✓✓";
+            color: var(--confirmed-blue);
+        }
+        
+        .status-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .status-item {
+            margin-bottom: 10px;
+        }
+        
+        .status-item strong {
+            color: var(--primary-blue);
+            display: inline-block;
+            width: 180px;
+        }
+        
+        /* Photo Gallery Section */
+        .photo-gallery {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-img {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .gallery-caption {
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .gallery-caption h4 {
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+        
+        /* About Andorra Section */
+        .about-andorra {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .country-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .country-img {
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, var(--secondary-blue), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        /* Visa Types Section */
+        .visa-types {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .visa-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .visa-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            border-top: 4px solid var(--primary-blue);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .visa-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .visa-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .visa-card h3:before {
+            content: "•";
+            margin-right: 10px;
+            color: var(--accent-gold);
+            font-size: 24px;
+        }
+        
+        .visa-card ul {
+            padding-left: 20px;
+        }
+        
+        .visa-card li {
+            margin-bottom: 8px;
+            list-style-type: square;
+            color: var(--secondary-blue);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:after {
+            content: "▼";
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active:after {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 10px;
+        }
+        
+        .faq-answer.visible {
+            display: block;
+        }
+        
+        /* Contact Form */
+        .contact-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 150px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        /* Apply Now Form */
+        .apply-form-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+        }
+        
+        .upload-section {
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .upload-section:before {
+            content: "📁";
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Confetti Effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-gold);
+            opacity: 0;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .hero h2 {
+                font-size: 30px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .status-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .visa-card {
+                min-width: 100%;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-content">
+            <div class="logo-section">
+                <div class="andorra-flag"></div>
+                <div>
+                    <div class="gov-text">GOVERN D'ANDORRA</div>
+                    <h1>Department of Migration and Foreign Affairs</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="check-status">Check Status</a></li>
+                    <li><a href="#" class="nav-link" data-page="apply">Apply Now</a></li>
+                    <li><a href="#" class="nav-link" data-page="gallery">Photo Gallery</a></li>
+                    <li><a href="#" class="nav-link" data-page="visa-types">Visa Types</a></li>
+                    <li><a href="#" class="nav-link" data-page="faq">FAQ</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home-section">
+        <div class="container">
+            <h2>Online Visa Processing System</h2>
+            <p>Welcome to the official portal of the Principality of Andorra for visa applications and immigration services. Apply for your visa online and explore the beauty of our mountains, culture, and heritage.</p>
+            <button class="btn" id="apply-now-btn">Apply for Visa Now</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Check Status Section -->
+        <section id="check-status-section" class="check-status-section">
+            <h2 class="section-title">Check Your Application Status</h2>
+            <div class="status-form">
+                <div class="form-group">
+                    <label for="application-id">Application ID</label>
+                    <input type="text" id="application-id" placeholder="Application ID">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" id="dob" placeholder="DDMMYYYY">
+                </div>
+                <div class="form-group">
+                    <label for="passport">Passport No.</label>
+                    <input type="text" id="passport" placeholder="Passport No.">
+                </div>
+                <button class="btn" id="check-status-btn">Check Status</button>
+            </div>
+            
+            <!-- Status Result for Happy -->
+            <div id="status-happy" class="status-result status-granted">
+                <h3 class="status-title">Application Status</h3>
+                <div class="status-details">
+                    <div class="status-item"><strong>Name:</strong> Happy</div>
+                    <div class="status-item"><strong>Application Id:</strong> 2169533052177</div>
+                    <div class="status-item"><strong>Nationality:</strong> Indian</div>
+                    <div class="status-item"><strong>Visa Category:</strong> Employment</div>
+                    <div class="status-item"><strong>Visa Grant No:</strong> 1649902348970</div>
+                    <div class="status-item"><strong>Employee:</strong> Construccions Roca</div>
+                    <div class="status-item"><strong>Job Position:</strong> Security Guard</div>
+                    <div class="status-item"><strong>Application Status:</strong> <span style="color: var(--success-green); font-weight: bold;">Your Visa Has Been Granted, You can check Your Registered Email</span></div>
+                </div>
+            </div>
+            
+            <!-- Status Result for Inder -->
+            <div id="status-inder" class="status-result status-confirmed">
+                <h3 class="status-title double">Application Status</h3>
+                <div class="status-details">
+                    <div class="status-item"><strong>Name:</strong> Inder</div>
+                    <div class="status-item"><strong>Application Id:</strong> 667755788877</div>
+                    <div class="status-item"><strong>Nationality:</strong> Indian</div>
+                    <div class="status-item"><strong>Visa Category:</strong> Employment</div>
+                    <div class="status-item"><strong>Visa Grant No:</strong> 166990237775</div>
+                    <div class="status-item"><strong>Employee:</strong> Helper</div>
+                    <div class="status-item"><strong>Job Position:</strong> Helper</div>
+                    <div class="status-item"><strong>Application Status:</strong> <span style="color: var(--confirmed-blue); font-weight: bold; font-size: 18px;">Your Visa Is Confirmed! Welcome to Andorra!</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section id="gallery-section" class="photo-gallery">
+            <h2 class="section-title">Discover Beautiful Andorra</h2>
+            <p>Explore the stunning landscapes, charming villages, and vibrant culture of the Principality of Andorra.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-img">🏔️ Pyrenees Mountains</div>
+                    <div class="gallery-caption">
+                        <h4>Pyrenees Mountains</h4>
+                        <p>Majestic peaks that offer world-class skiing and hiking opportunities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img">🏙️ Andorra la Vella</div>
+                    <div class="gallery-caption">
+                        <h4>Andorra la Vella</h4>
+                        <p>The capital city and Europe's highest capital at 1,023 meters</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img">⛷️ Grandvalira Ski Resort</div>
+                    <div class="gallery-caption">
+                        <h4>Grandvalira Ski Resort</h4>
+                        <p>One of the largest ski areas in Southern Europe</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img">🌄 Valleys of Andorra</div>
+                    <div class="gallery-caption">
+                        <h4>Valleys of Andorra</h4>
+                        <p>Beautiful valleys perfect for hiking and nature walks</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img">⛪ Sant Joan de Caselles</div>
+                    <div class="gallery-caption">
+                        <h4>Sant Joan de Caselles</h4>
+                        <p>Historic Romanesque church from the 11th-12th centuries</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img">🛍️ Shopping in Andorra</div>
+                    <div class="gallery-caption">
+                        <h4>Shopping in Andorra</h4>
+                        <p>Famous for duty-free shopping with numerous boutiques</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Andorra Section -->
+        <section id="about-andorra-section" class="about-andorra">
+            <h2 class="section-title">Explore Principality of Andorra</h2>
+            <p>Andorra is a sovereign landlocked microstate on the Iberian Peninsula, in the eastern Pyrenees, bordered by France to the north and Spain to the south. With an area of 468 square kilometers, it is the sixth smallest country in Europe.</p>
+            
+            <p>Known for its stunning mountain scenery, Andorra is a popular destination for skiing and hiking. The capital, Andorra la Vella, is the highest capital city in Europe at an elevation of 1,023 meters.</p>
+            
+            <p>Andorra has a rich history dating back to Charlemagne and has maintained its independence for over a millennium. The official language is Catalan, though Spanish, French, and Portuguese are also commonly spoken.</p>
+            
+            <div class="country-images">
+                <div class="country-img">❄️ Winter in Andorra</div>
+                <div class="country-img">☀️ Summer Landscape</div>
+                <div class="country-img">🏘️ Traditional Village</div>
+                <div class="country-img">🎭 Cultural Heritage</div>
+            </div>
+            
+            <h3>Visa Guidelines for Andorra</h3>
+            <ul>
+                <li>All visitors to Andorra must have a valid passport or travel document.</li>
+                <li>Since Andorra is not part of the Schengen Area, separate visa requirements apply.</li>
+                <li>Holders of Schengen visas can enter Andorra but must ensure their visa allows re-entry to France or Spain.</li>
+                <li>Work visas require a pre-arranged employment contract with an Andorran company.</li>
+                <li>Processing time for visas is typically 15-30 working days.</li>
+            </ul>
+        </section>
+
+        <!-- Visa Types Section -->
+        <section id="visa-types-section" class="visa-types">
+            <h2 class="section-title">Visa Types & Categories</h2>
+            <div class="visa-categories">
+                <div class="visa-card">
+                    <h3>🌍 Tourist Visa</h3>
+                    <ul>
+                        <li>Valid for up to 90 days</li>
+                        <li>Proof of accommodation required</li>
+                        <li>Return flight ticket</li>
+                        <li>Travel insurance coverage</li>
+                        <li>Proof of sufficient funds</li>
+                    </ul>
+                </div>
+                <div class="visa-card">
+                    <h3>💼 Work Visa</h3>
+                    <ul>
+                        <li>Employment contract required</li>
+                        <li>Valid for duration of contract</li>
+                        <li>Medical certificate</li>
+                        <li>Criminal background check</li>
+                        <li>Approval from Andorran employer</li>
+                    </ul>
+                </div>
+                <div class="visa-card">
+                    <h3>🎓 Student Visa</h3>
+                    <ul>
+                        <li>Acceptance letter from Andorran institution</li>
+                        <li>Proof of financial support</li>
+                        <li>Health insurance</li>
+                        <li>Accommodation proof</li>
+                        <li>Valid for study period</li>
+                    </ul>
+                </div>
+                <div class="visa-card">
+                    <h3>🤝 Business Visa</h3>
+                    <ul>
+                        <li>Business invitation letter</li>
+                        <li>Proof of business activities</li>
+                        <li>Company registration documents</li>
+                        <li>Valid for short-term business activities</li>
+                        <li>Conference/meeting details if applicable</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">How long does it take to process a visa application?</div>
+                <div class="faq-answer">Processing times vary by visa type. Tourist visas typically take 10-15 working days, while work and student visas may take 20-30 working days. You can check your application status using our online system.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I extend my visa while in Andorra?</div>
+                <div class="faq-answer">Visa extensions are possible in certain circumstances, such as medical emergencies or unexpected events. You must apply for an extension before your current visa expires at the Immigration Office in Andorra la Vella.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Do I need a visa if I have a Schengen visa?</div>
+                <div class="faq-answer">Andorra is not part of the Schengen Area. While holders of Schengen visas can enter Andorra, they must ensure their visa allows multiple entries to return to France or Spain. Some travelers may still need a separate Andorran visa depending on their nationality.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What documents do I need for a work visa?</div>
+                <div class="faq-answer">For a work visa, you need: a valid passport, employment contract from an Andorran company, medical certificate, criminal background check, completed application form, passport-sized photographs, and proof of accommodation in Andorra.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I work in Andorra with a tourist visa?</div>
+                <div class="faq-answer">No, it is illegal to work in Andorra with a tourist visa. You must obtain a proper work visa before engaging in any employment activities. Violators may face deportation and bans from re-entering Andorra.</div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact-section" class="contact-section">
+            <h2 class="section-title">Contact Us</h2>
+            <p>If you have any questions about the visa application process or need assistance, please fill out the form below and we will respond within 2-3 working days.</p>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name</label>
+                        <input type="text" id="contact-name" placeholder="Your Full Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" placeholder="Your Email Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input type="text" id="contact-subject" placeholder="Subject of your inquiry">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" placeholder="Please describe your inquiry in detail"></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </section>
+
+        <!-- Apply Now Form Section (Hidden by default) -->
+        <section id="apply-form-section" class="apply-form-section" style="display: none;">
+            <h2 class="section-title">Visa Application Form</h2>
+            <form id="visa-application-form">
+                <h3>Personal Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="app-dob">Date of Birth</label>
+                        <input type="date" id="app-dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nationality">Nationality</label>
+                        <select id="nationality" required>
+                            <option value="">Select Nationality</option>
+                            <option value="Indian">Indian</option>
+                            <option value="American">American</option>
+                            <option value="British">British</option>
+                            <option value="French">French</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passport-number">Passport Number</label>
+                        <input type="text" id="passport-number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passport-expiry">Passport Expiry Date</label>
+                        <input type="date" id="passport-expiry" required>
+                    </div>
+                </div>
+                
+                <h3>Travel Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visa-type">Visa Type</label>
+                        <select id="visa-type" required>
+                            <option value="">Select Visa Type</option>
+                            <option value="Tourist">Tourist Visa</option>
+                            <option value="Work">Work Visa</option>
+                            <option value="Student">Student Visa</option>
+                            <option value="Business">Business Visa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="purpose">Purpose of Visit</label>
+                        <input type="text" id="purpose" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="arrival-date">Intended Arrival Date</label>
+                        <input type="date" id="arrival-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Intended Duration of Stay (days)</label>
+                        <input type="number" id="duration" min="1" max="365" required>
+                    </div>
+                </div>
+                
+                <h3>Document Upload</h3>
+                <div class="upload-section">
+                    <p>Upload required documents (Passport, Photo, Proof of Accommodation, etc.)</p>
+                    <p>Maximum file size: 5MB per file. Accepted formats: PDF, JPG, PNG</p>
+                    <input type="file" id="document-upload" multiple style="margin-top: 15px;">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="terms" required>
+                        I certify that all information provided is true and correct to the best of my knowledge.
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn">Submit Application</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Department of Migration and Foreign Affairs</h3>
+                <p>Government of Andorra</p>
+                <p>Av. Princep Benlloch 1, AD500 Andorra la Vella</p>
+                <p>Principality of Andorra</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" class="footer-nav-link" data-page="home">Home</a></li>
+                    <li><a href="#" class="footer-nav-link" data-page="check-status">Check Status</a></li>
+                    <li><a href="#" class="footer-nav-link" data-page="apply">Apply Now</a></li>
+                    <li><a href="#" class="footer-nav-link" data-page="gallery">Photo Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <ul>
+                    <li>📞 Phone: +376 875 700</li>
+                    <li>📧 Email: visa.support@govern.ad</li>
+                    <li>🕐 Mon-Fri: 9:00 AM - 5:00 PM</li>
+                    <li>📍 Address: Andorra la Vella</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>&copy; 2025 Govern d'Andorra - Department of Migration and Foreign Affairs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-link, .footer-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                
+                // Update active navigation
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show the corresponding section
+                const sections = [
+                    'home-section', 'check-status-section', 'about-andorra-section',
+                    'gallery-section', 'visa-types-section', 'faq-section',
+                    'contact-section', 'apply-form-section'
+                ];
+                
+                // Hide all sections first
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) section.style.display = 'none';
+                });
+                
+                // Show selected section
+                if (page === 'home') {
+                    document.getElementById('home-section').style.display = 'block';
+                    document.getElementById('check-status-section').style.display = 'block';
+                    document.getElementById('about-andorra-section').style.display = 'block';
+                    document.getElementById('gallery-section').style.display = 'block';
+                    document.getElementById('visa-types-section').style.display = 'block';
+                    document.getElementById('faq-section').style.display = 'block';
+                    document.getElementById('contact-section').style.display = 'block';
+                    
+                    // Hide status results
+                    document.getElementById('status-happy').classList.remove('visible');
+                    document.getElementById('status-inder').classList.remove('visible');
+                } else if (page === 'check-status') {
+                    document.getElementById('check-status-section').style.display = 'block';
+                } else if (page === 'apply') {
+                    document.getElementById('apply-form-section').style.display = 'block';
+                } else if (page === 'gallery') {
+                    document.getElementById('gallery-section').style.display = 'block';
+                } else if (page === 'visa-types') {
+                    document.getElementById('visa-types-section').style.display = 'block';
+                } else if (page === 'faq') {
+                    document.getElementById('faq-section').style.display = 'block';
+                } else if (page === 'contact') {
+                    document.getElementById('contact-section').style.display = 'block';
+                }
+            });
+        });
+        
+        // Apply Now button in hero section
+        document.getElementById('apply-now-btn').addEventListener('click', function() {
+            document.querySelector('.nav-link[data-page="apply"]').click();
+        });
+        
+        // Confetti effect function
+        function createConfetti() {
+            const colors = ['#d4af37', '#1a4da3', '#28a745', '#17a2b8', '#d0103a'];
+            const container = document.body;
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                container.appendChild(confetti);
+                
+                // Animate confetti
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                });
+                
+                // Remove confetti after animation
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        // Check Status functionality
+        document.getElementById('check-status-btn').addEventListener('click', function() {
+            const appId = document.getElementById('application-id').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+            const passport = document.getElementById('passport').value.trim();
+            
+            // Hide previous results
+            document.getElementById('status-happy').classList.remove('visible');
+            document.getElementById('status-inder').classList.remove('visible');
+            
+            // Check for specific application IDs
+            if (appId === 'Happy' && dob === '09072000' && passport === '090009') {
+                document.getElementById('status-happy').classList.add('visible');
+            } else if (appId === '667755788877') {
+                document.getElementById('status-inder').classList.add('visible');
+                // Create confetti effect for confirmed visa
+                createConfetti();
+                
+                // Show congratulatory message
+                setTimeout(() => {
+                    alert('Congratulations! Your visa for Andorra has been confirmed! 🎉\n\nWelcome to Andorra, Inder! Your helper position is waiting for you.');
+                }, 500);
+            } else if (appId && dob && passport) {
+                // Show generic processing message for other inputs
+                alert('Application found. Status: Under Processing. Please check back later.');
+            } else {
+                alert('Please fill in all fields to check your application status.');
+            }
+        });
+        
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                
+                if (answer.classList.contains('visible')) {
+                    answer.classList.remove('visible');
+                    this.classList.remove('active');
+                } else {
+                    // Close other open FAQs
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.classList.remove('visible');
+                    });
+                    document.querySelectorAll('.faq-question').forEach(q => {
+                        q.classList.remove('active');
+                    });
+                    
+                    answer.classList.add('visible');
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Contact form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry. We will respond within 2-3 working days.');
+            this.reset();
+        });
+        
+        // Visa application form submission
+        document.getElementById('visa-application-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your visa application has been submitted successfully. Your application ID will be sent to your email.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
